@@ -1,8 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-
-
-import 'package:flutter/foundation.dart';
+import 'dart:convert';
 
 class Usermodel {
   final String email;
@@ -73,34 +71,20 @@ class Usermodel {
       following: List<String>.from(map['following']),
       profilePic: map['profilePic'] as String,
       bannerPic: map['bannerPic'] ?? '',
-      bio: map['bio'] ?? '',
-      uid: map['uid'] as String,
+      bio: map['\$bio'] ?? '',
+      uid: map['\$id'] as String,
       isverified: map['isverified'] as bool,
     );
   }
 
-  // String toJson() => json.encode(toMap());
+  String toJson() => json.encode(toMap());
 
-  // factory Usermodel.fromJson(String source) => Usermodel.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  // @override
-  // String toString() {
-  //   return 'Usermodel(email: $email, name: $name, followers: $followers, following: $following, profilePic: $profilePic, bannerPic: $bannerPic, bio: $bio, uid: $uid, isverified: $isverified)';
-  // }
+  factory Usermodel.fromJson(String source) =>
+      Usermodel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  bool operator ==(covariant Usermodel other) {
-    if (identical(this, other)) return true;
-
-    return other.email == email &&
-        other.name == name &&
-        listEquals(other.followers, followers) &&
-        listEquals(other.following, following) &&
-        other.profilePic == profilePic &&
-        other.bannerPic == bannerPic &&
-        other.bio == bio &&
-        other.uid == uid &&
-        other.isverified == isverified;
+  String toString() {
+    return 'Usermodel(email: $email, name: $name, followers: $followers, following: $following, profilePic: $profilePic, bannerPic: $bannerPic, bio: $bio, uid: $uid, isverified: $isverified)';
   }
 
   @override

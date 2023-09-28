@@ -4,10 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutterfeed/common/assets/appbar.dart';
+import 'package:flutterfeed/common/Reusables/appbar.dart';
 import 'package:flutterfeed/theme/pallete.dart';
-import 'package:flutterfeed/view/main/homepage.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutterfeed/view/main/homescreen.dart';
 
 class loginpage extends StatefulWidget {
   const loginpage({super.key});

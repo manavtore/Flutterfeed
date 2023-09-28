@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
-import 'package:flutterfeed/common/assets/appbar.dart';
+import 'package:flutterfeed/common/Reusables/appbar.dart';
 import 'package:flutterfeed/theme/pallete.dart';
 
 class create_account extends StatefulWidget {

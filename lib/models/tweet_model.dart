@@ -1,154 +1,173 @@
-// // ignore_for_file: public_member_api_docs, sort_constructors_first
-// import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutterfeed/core/enums/tweet_type.dart';
 
-// import 'package:flutter/foundation.dart';
+@immutable
+class Tweet {
+  final String text;
+  final List<String> hashtags;
+  final String link;
+  final List<String> imageLinks;
+  final String uid;
+  final TweetType tweetType;
+  final DateTime tweetedAt;
+  final List<String> likes;
+  final List<String> commentIds;
+  final String id;
+  final int reshareCount;
+  final String retweetedBy;
+  final String repliedTo;
+  Tweet({
+    required this.text,
+    required this.hashtags,
+    required this.link,
+    required this.imageLinks,
+    required this.uid,
+    required this.tweetType,
+    required this.tweetedAt,
+    required this.likes,
+    required this.commentIds,
+    required this.id,
+    required this.reshareCount,
+    required this.retweetedBy,
+    required this.repliedTo,
+  });
 
-// class Tweet {
-//   final String text;
-//   final List<String> hashtags;
-//   final String link;
-//   final List<String> imageLinks;
-//   final String uid;
-//   final TweetType tweetType;
-//   final DateTime tweetedAt;
-//   final List<String> likes;
-//   final List<String> commentIds;
-//   final String id;
-//   final int reshareCount;
-//   final String retweetedBy;
-//   final String repliedTo;
-//   Tweet({
-//     required this.text,
-//     required this.hashtags,
-//     required this.link,
-//     required this.imageLinks,
-//     required this.uid,
-//     required this.tweetType,
-//     required this.tweetedAt,
-//     required this.likes,
-//     required this.commentIds,
-//     required this.id,
-//     required this.reshareCount,
-//     required this.retweetedBy,
-//     required this.repliedTo,
-//   });
+  Tweet copyWith({
+    String? text,
+    List<String>? hashtags,
+    String? link,
+    List<String>? imageLinks,
+    String? uid,
+    TweetType? tweetType,
+    DateTime? tweetedAt,
+    List<String>? likes,
+    List<String>? commentIds,
+    String? id,
+    int? reshareCount,
+    String? retweetedBy,
+    String? repliedTo,
+  }) {
+    return Tweet(
+      text: text ?? this.text,
+      hashtags: hashtags ?? this.hashtags,
+      link: link ?? this.link,
+      imageLinks: imageLinks ?? this.imageLinks,
+      uid: uid ?? this.uid,
+      tweetType: tweetType ?? this.tweetType,
+      tweetedAt: tweetedAt ?? this.tweetedAt,
+      likes: likes ?? this.likes,
+      commentIds: commentIds ?? this.commentIds,
+      id: id ?? this.id,
+      reshareCount: reshareCount ?? this.reshareCount,
+      retweetedBy: retweetedBy ?? this.retweetedBy,
+      repliedTo: repliedTo ?? this.repliedTo,
+    );
+  }
 
+  Map<String, dynamic> toMap() {
+    final result = <String, dynamic>{};
 
+    result.addAll({'text': text});
+    result.addAll({'hashtags': hashtags});
+    result.addAll({'link': link});
+    result.addAll({'imageLinks': imageLinks});
+    result.addAll({'uid': uid});
+    result.addAll({'tweetType': tweetType.type});
+    result.addAll({'tweetedAt': tweetedAt.millisecondsSinceEpoch});
+    result.addAll({'likes': likes});
+    result.addAll({'commentIds': commentIds});
+    result.addAll({'reshareCount': reshareCount});
+    result.addAll({'retweetedBy': retweetedBy});
+    result.addAll({'repliedTo': repliedTo});
 
-//   Tweet copyWith({
-//     String? text,
-//     List<String>? hashtags,
-//     String? link,
-//     List<String>? imageLinks,
-//     String? uid,
-//     TweetType? tweetType,
-//     DateTime? tweetedAt,
-//     List<String>? likes,
-//     List<String>? commentIds,
-//     String? id,
-//     int? reshareCount,
-//     String? retweetedBy,
-//     String? repliedTo,
-//   }) {
-//     return Tweet(
-//       text: text ?? this.text,
-//       hashtags: hashtags ?? this.hashtags,
-//       link: link ?? this.link,
-//       imageLinks: imageLinks ?? this.imageLinks,
-//       uid: uid ?? this.uid,
-//       tweetType: tweetType ?? this.tweetType,
-//       tweetedAt: tweetedAt ?? this.tweetedAt,
-//       likes: likes ?? this.likes,
-//       commentIds: commentIds ?? this.commentIds,
-//       id: id ?? this.id,
-//       reshareCount: reshareCount ?? this.reshareCount,
-//       retweetedBy: retweetedBy ?? this.retweetedBy,
-//       repliedTo: repliedTo ?? this.repliedTo,
-//     );
-//   }
+    return result;
+  }
 
-//   Map<String, dynamic> toMap() {
-//     return <String, dynamic>{
-//       'text': text,
-//       'hashtags': hashtags,
-//       'link': link,
-//       'imageLinks': imageLinks,
-//       'uid': uid,
-//       'tweetType': tweetType.toMap(),
-//       'tweetedAt': tweetedAt.millisecondsSinceEpoch,
-//       'likes': likes,
-//       'commentIds': commentIds,
-//       'id': id,
-//       'reshareCount': reshareCount,
-//       'retweetedBy': retweetedBy,
-//       'repliedTo': repliedTo,
-//     };
-//   }
+  factory Tweet.fromMap(Map<String, dynamic> map) {
+    return Tweet(
+      text: map['text'] ?? '',
+      hashtags: List<String>.from(map['hashtags']),
+      link: map['link'] ?? '',
+      imageLinks: List<String>.from(map['imageLinks']),
+      uid: map['uid'] ?? '',
+      tweetType: (map['tweetType'] as String).toTweetTypeEnum(),
+      tweetedAt: DateTime.fromMillisecondsSinceEpoch(map['tweetedAt']),
+      likes: List<String>.from(map['likes']),
+      commentIds: List<String>.from(map['commentIds']),
+      id: map['\$id'] ?? '',
+      reshareCount: map['reshareCount']?.toInt() ?? 0,
+      retweetedBy: map['retweetedBy'] ?? '',
+      repliedTo: map['repliedTo'] ?? '',
+    );
+  }
 
-//   factory Tweet.fromMap(Map<String, dynamic> map) {
-//     return Tweet(
-//       text: map['text'] as String,
-//       hashtags: List<String>.from((map['hashtags'] as List<String>),
-//       link: map['link'] as String,
-//       imageLinks: List<String>.from((map['imageLinks'] as List<String>),
-//       uid: map['uid'] as String,
-//       tweetType: TweetType.fromMap(map['tweetType'] as Map<String,dynamic>),
-//       tweetedAt: DateTime.fromMillisecondsSinceEpoch(map['tweetedAt'] as int),
-//       likes: List<String>.from((map['likes'] as List<String>),
-//       commentIds: List<String>.from((map['commentIds'] as List<String>),
-//       id: map['id'] as String,
-//       reshareCount: map['reshareCount'] as int,
-//       retweetedBy: map['retweetedBy'] as String,
-//       repliedTo: map['repliedTo'] as String,
-//     );
-//   }
+  @override
+  String toString() {
+    return 'Tweet(text: $text, hashtags: $hashtags, link: $link, imageLinks: $imageLinks, uid: $uid, tweetType: $tweetType, tweetedAt: $tweetedAt, likes: $likes, commentIds: $commentIds, id: $id, reshareCount: $reshareCount, retweetedBy: $retweetedBy, repliedTo: $repliedTo)';
+  }
 
-//   String toJson() => json.encode(toMap());
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
 
-//   factory Tweet.fromJson(String source) => Tweet.fromMap(json.decode(source) as Map<String, dynamic>);
+    return other is Tweet &&
+        other.text == text &&
+        listEquals(other.hashtags, hashtags) &&
+        other.link == link &&
+        listEquals(other.imageLinks, imageLinks) &&
+        other.uid == uid &&
+        other.tweetType == tweetType &&
+        other.tweetedAt == tweetedAt &&
+        listEquals(other.likes, likes) &&
+        listEquals(other.commentIds, commentIds) &&
+        other.id == id &&
+        other.reshareCount == reshareCount &&
+        other.retweetedBy == retweetedBy &&
+        other.repliedTo == repliedTo;
+  }
 
-//   @override
-//   String toString() {
-//     return 'Tweet(text: $text, hashtags: $hashtags, link: $link, imageLinks: $imageLinks, uid: $uid, tweetType: $tweetType, tweetedAt: $tweetedAt, likes: $likes, commentIds: $commentIds, id: $id, reshareCount: $reshareCount, retweetedBy: $retweetedBy, repliedTo: $repliedTo)';
-//   }
+  @override
+  int get hashCode {
+    return text.hashCode ^
+        hashtags.hashCode ^
+        link.hashCode ^
+        imageLinks.hashCode ^
+        uid.hashCode ^
+        tweetType.hashCode ^
+        tweetedAt.hashCode ^
+        likes.hashCode ^
+        commentIds.hashCode ^
+        id.hashCode ^
+        reshareCount.hashCode ^
+        retweetedBy.hashCode ^
+        repliedTo.hashCode;
+  }
 
-//   @override
-//   bool operator ==(covariant Tweet other) {
-//     if (identical(this, other)) return true;
-  
-//     return 
-//       other.text == text &&
-//       listEquals(other.hashtags, hashtags) &&
-//       other.link == link &&
-//       listEquals(other.imageLinks, imageLinks) &&
-//       other.uid == uid &&
-//       other.tweetType == tweetType &&
-//       other.tweetedAt == tweetedAt &&
-//       listEquals(other.likes, likes) &&
-//       listEquals(other.commentIds, commentIds) &&
-//       other.id == id &&
-//       other.reshareCount == reshareCount &&
-//       other.retweetedBy == retweetedBy &&
-//       other.repliedTo == repliedTo;
-//   }
+  final CollectionReference tweetscollection =
+      FirebaseFirestore.instance.collection('tweets');
 
-//   @override
-//   int get hashCode {
-//     return text.hashCode ^
-//       hashtags.hashCode ^
-//       link.hashCode ^
-//       imageLinks.hashCode ^
-//       uid.hashCode ^
-//       tweetType.hashCode ^
-//       tweetedAt.hashCode ^
-//       likes.hashCode ^
-//       commentIds.hashCode ^
-//       id.hashCode ^
-//       reshareCount.hashCode ^
-//       retweetedBy.hashCode ^
-//       repliedTo.hashCode;
-//   }
-// }
+  Future<void> createTweet(String uid) async {
+    try {
+      await tweetscollection.add(Tweet.fromMap(myTweet.toMap()).toMap());
+    } catch (e) {
+      print(e);
+    }
+  }
+}
 
-// class TweetType {
-// }
+Tweet myTweet = Tweet(
+  text: 'This is my tweet!',
+  hashtags: const ['flutter', 'example'],
+  link: ' ',
+  imageLinks: const [''],
+  uid: 'user123',
+  tweetType: TweetType.text,
+  tweetedAt: DateTime.now(),
+  likes: const [],
+  commentIds: const [],
+  id: 'tweet123',
+  reshareCount: 0,
+  retweetedBy: '',
+  repliedTo: '',
+);

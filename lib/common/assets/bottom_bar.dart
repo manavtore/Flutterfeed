@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutterfeed/theme/pallete.dart';
-import 'package:flutterfeed/Routes/route_config.dart';
 import 'package:go_router/go_router.dart';
 
 class bottom_bar extends StatelessWidget {
@@ -15,7 +14,7 @@ class bottom_bar extends StatelessWidget {
         children: [
           const Text('Don\'t have an account? '),
           TextButton(
-            onPressed: () => context.go('/signUp'),
+            onPressed: () => context.go('/signup'),
             child: const Text(
               'Sign up',
             ),
