@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutterfeed/common/Reusables/appbar.dart';
 import 'package:flutterfeed/theme/pallete.dart';
 import 'package:flutterfeed/view/main/homescreen.dart';
+import 'package:go_router/go_router.dart';
 
 class loginpage extends StatefulWidget {
   const loginpage({super.key});
@@ -25,6 +26,7 @@ class _loginpageState extends State<loginpage> {
     try {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
           email: emailid.text, password: pswd.text);
+      GoRouter.of(context).go('/homescreen');
       return true;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -107,10 +109,10 @@ class _loginpageState extends State<loginpage> {
             ElevatedButton(
                 onPressed: () async {
                   if (await loginwithemailandpassword()) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const homescreen()));
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => const homescreen()));
                   }
                 },
                 child: const Text('log in'))

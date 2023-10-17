@@ -1,10 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
 import 'package:flutterfeed/common/Reusables/appbar.dart';
 import 'package:flutterfeed/theme/pallete.dart';
+import 'package:go_router/go_router.dart';
 
 class create_account extends StatefulWidget {
   const create_account({super.key});
@@ -24,8 +27,8 @@ class _create_accountState extends State<create_account> {
     var datePicked = await DatePicker.showSimpleDatePicker(
       context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2020),
-      lastDate: DateTime(2090),
+      firstDate: DateTime(2003),
+      lastDate: DateTime(2024),
       dateFormat: "dd-MMMM-yyyy",
       locale: DateTimePickerLocale.en_us,
       looping: true,
@@ -44,16 +47,47 @@ class _create_accountState extends State<create_account> {
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
           email: emailid.text, password: pswd.text);
+      Map<String, dynamic> User = {
+        'name': name.text,
+        'email': emailid.text,
+        'password': pswd.text,
+        'date': _selectedDate,
+      };
+
+      await FirebaseFirestore.instance.collection('Users').add(User);
+      GoRouter.of(context).go('/login');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         if (kDebugMode) {
           print('Password is Weak');
         }
+        AlertDialog(
+          title: const Text('Password is Weak'),
+          content: const Text('Please enter a strong password'),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('OK'))
+          ],
+        );
       } else if (e.code == 'email-already-in-use') {
         if (kDebugMode) {
           print('Email aldready exists');
         }
       }
+      AlertDialog(
+        title: const Text('email already in use'),
+        content: const Text('Please enter another email'),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'))
+        ],
+      );
     } catch (e) {
       if (kDebugMode) {
         print(e);

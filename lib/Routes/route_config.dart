@@ -9,8 +9,7 @@ import 'package:flutterfeed/view/page/signup.dart';
 import 'package:go_router/go_router.dart';
 
 class Approuter {
-  GoRouter router =
-      GoRouter(initialLocation: '/profilescreen', routes: <GoRoute>[
+  GoRouter router = GoRouter(initialLocation: '/homescreen', routes: <GoRoute>[
     GoRoute(
       name: 'signin',
       path: '/signin',

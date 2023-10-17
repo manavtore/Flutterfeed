@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfeed/common/Reusables/appbar.dart';
@@ -24,7 +26,24 @@ class _homescreenState extends State<homescreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: UIcomponenets.appBar,
-      body: const IndexedStack(),
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance.collection('tweets').snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const CircularProgressIndicator();
+          }
+          var tweets = snapshot.data!.docs;
+          return ListView.builder(
+              itemCount: tweets.length,
+              itemBuilder: (context, index) {
+                var tweet = tweets[index].data() as Map<String, dynamic>;
+                return ListTile(
+                  title: Text(tweet['text']),
+                  subtitle: Text(tweet['uid']),
+                );
+              });
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           GoRouter.of(context).go('/createTweet');

@@ -17,6 +17,7 @@ class Tweet {
   final int reshareCount;
   final String retweetedBy;
   final String repliedTo;
+
   Tweet({
     required this.text,
     required this.hashtags,
@@ -33,141 +34,54 @@ class Tweet {
     required this.repliedTo,
   });
 
-  Tweet copyWith({
-    String? text,
-    List<String>? hashtags,
-    String? link,
-    List<String>? imageLinks,
-    String? uid,
-    TweetType? tweetType,
-    DateTime? tweetedAt,
-    List<String>? likes,
-    List<String>? commentIds,
-    String? id,
-    int? reshareCount,
-    String? retweetedBy,
-    String? repliedTo,
-  }) {
-    return Tweet(
-      text: text ?? this.text,
-      hashtags: hashtags ?? this.hashtags,
-      link: link ?? this.link,
-      imageLinks: imageLinks ?? this.imageLinks,
-      uid: uid ?? this.uid,
-      tweetType: tweetType ?? this.tweetType,
-      tweetedAt: tweetedAt ?? this.tweetedAt,
-      likes: likes ?? this.likes,
-      commentIds: commentIds ?? this.commentIds,
-      id: id ?? this.id,
-      reshareCount: reshareCount ?? this.reshareCount,
-      retweetedBy: retweetedBy ?? this.retweetedBy,
-      repliedTo: repliedTo ?? this.repliedTo,
-    );
-  }
-
   Map<String, dynamic> toMap() {
-    final result = <String, dynamic>{};
-
-    result.addAll({'text': text});
-    result.addAll({'hashtags': hashtags});
-    result.addAll({'link': link});
-    result.addAll({'imageLinks': imageLinks});
-    result.addAll({'uid': uid});
-    result.addAll({'tweetType': tweetType.type});
-    result.addAll({'tweetedAt': tweetedAt.millisecondsSinceEpoch});
-    result.addAll({'likes': likes});
-    result.addAll({'commentIds': commentIds});
-    result.addAll({'reshareCount': reshareCount});
-    result.addAll({'retweetedBy': retweetedBy});
-    result.addAll({'repliedTo': repliedTo});
-
-    return result;
+    return {
+      'text': text,
+      'hashtags': hashtags,
+      'link': link,
+      'imageLinks': imageLinks,
+      'uid': uid,
+      'tweetType': tweetType.type,
+      'tweetedAt': tweetedAt.millisecondsSinceEpoch,
+      'likes': likes,
+      'commentIds': commentIds,
+      'id': id,
+      'reshareCount': reshareCount,
+      'retweetedBy': retweetedBy,
+      'repliedTo': repliedTo,
+    };
   }
 
-  factory Tweet.fromMap(Map<String, dynamic> map) {
-    return Tweet(
-      text: map['text'] ?? '',
-      hashtags: List<String>.from(map['hashtags']),
-      link: map['link'] ?? '',
-      imageLinks: List<String>.from(map['imageLinks']),
-      uid: map['uid'] ?? '',
-      tweetType: (map['tweetType'] as String).toTweetTypeEnum(),
-      tweetedAt: DateTime.fromMillisecondsSinceEpoch(map['tweetedAt']),
-      likes: List<String>.from(map['likes']),
-      commentIds: List<String>.from(map['commentIds']),
-      id: map['\$id'] ?? '',
-      reshareCount: map['reshareCount']?.toInt() ?? 0,
-      retweetedBy: map['retweetedBy'] ?? '',
-      repliedTo: map['repliedTo'] ?? '',
-    );
-  }
-
-  @override
-  String toString() {
-    return 'Tweet(text: $text, hashtags: $hashtags, link: $link, imageLinks: $imageLinks, uid: $uid, tweetType: $tweetType, tweetedAt: $tweetedAt, likes: $likes, commentIds: $commentIds, id: $id, reshareCount: $reshareCount, retweetedBy: $retweetedBy, repliedTo: $repliedTo)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is Tweet &&
-        other.text == text &&
-        listEquals(other.hashtags, hashtags) &&
-        other.link == link &&
-        listEquals(other.imageLinks, imageLinks) &&
-        other.uid == uid &&
-        other.tweetType == tweetType &&
-        other.tweetedAt == tweetedAt &&
-        listEquals(other.likes, likes) &&
-        listEquals(other.commentIds, commentIds) &&
-        other.id == id &&
-        other.reshareCount == reshareCount &&
-        other.retweetedBy == retweetedBy &&
-        other.repliedTo == repliedTo;
-  }
-
-  @override
-  int get hashCode {
-    return text.hashCode ^
-        hashtags.hashCode ^
-        link.hashCode ^
-        imageLinks.hashCode ^
-        uid.hashCode ^
-        tweetType.hashCode ^
-        tweetedAt.hashCode ^
-        likes.hashCode ^
-        commentIds.hashCode ^
-        id.hashCode ^
-        reshareCount.hashCode ^
-        retweetedBy.hashCode ^
-        repliedTo.hashCode;
-  }
-
-  final CollectionReference tweetscollection =
+  final CollectionReference tweetsCollection =
       FirebaseFirestore.instance.collection('tweets');
 
-  Future<void> createTweet(String uid) async {
+  Future<void> createTweet() async {
     try {
-      await tweetscollection.add(Tweet.fromMap(myTweet.toMap()).toMap());
+      await tweetsCollection.add(toMap());
     } catch (e) {
-      print(e);
+      print('Error creating tweet: $e');
     }
   }
 }
 
-Tweet myTweet = Tweet(
-  text: 'This is my tweet!',
-  hashtags: const ['flutter', 'example'],
-  link: ' ',
-  imageLinks: const [''],
-  uid: 'user123',
-  tweetType: TweetType.text,
-  tweetedAt: DateTime.now(),
-  likes: const [],
-  commentIds: const [],
-  id: 'tweet123',
-  reshareCount: 0,
-  retweetedBy: '',
-  repliedTo: '',
-);
+// Usage example
+void main() async {
+  Tweet myTweet = Tweet(
+    text: 'This is my tweet!',
+    hashtags: const ['flutter', 'example'],
+    link: ' ',
+    imageLinks: const [''],
+    uid: 'user123',
+    tweetType: TweetType.text,
+    tweetedAt: DateTime.now(),
+    likes: const [],
+    commentIds: const [],
+    id: 'tweet123',
+    reshareCount: 0,
+    retweetedBy: '',
+    repliedTo: '',
+  );
+
+  // Call createTweet to add the tweet to Firestore
+  await myTweet.createTweet();
+}
