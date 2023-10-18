@@ -63,7 +63,9 @@ class _CreateTweetScreenState extends State<CreateTweetScreen> {
     ImagePicker imagePicker = ImagePicker();
 
     XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
-
+    if (kDebugMode) {
+      print('${file?.path}');
+    }
     if (file != null) {
       setState(() {
         _imagefile = File(file.path);
@@ -72,11 +74,14 @@ class _CreateTweetScreenState extends State<CreateTweetScreen> {
   }
 
   Future<String> uploadImageToStorage() async {
+    if (_imagefile == null) {
+      return '';
+    }
     String filename = DateTime.now().millisecondsSinceEpoch.toString();
 
     Reference referenceroot = FirebaseStorage.instance.ref();
 
-    Reference referenceDirImages = referenceroot.child('images');
+    Reference referenceDirImages = referenceroot.child('Images');
 
     Reference referenceToUploadImage = referenceDirImages.child(filename);
 
@@ -167,14 +172,14 @@ class _CreateTweetScreenState extends State<CreateTweetScreen> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleAvatar(
-                  radius: 25,
-                  backgroundImage: userProfileURl != null
-                      ? NetworkImage(userProfileURl!)
-                      : const NetworkImage(
-                          'assets/avatars/default_avatar.png',
-                        ),
-                ),
+                // CircleAvatar(
+                //   radius: 25,
+                //   backgroundImage: userProfileURl != null
+                //       ? NetworkImage(userProfileURl!)
+                //       : const NetworkImage(
+                //           'assets/avatars/default_avatar.png',
+                //         ),
+                // ),
                 const Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: 16,

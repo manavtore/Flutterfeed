@@ -39,7 +39,7 @@ class _homescreenState extends State<homescreen> {
                 var tweet = tweets[index].data() as Map<String, dynamic>;
                 return ListTile(
                   title: Text(tweet['text']),
-                  subtitle: Text(tweet['uid']),
+                  subtitle: Text(tweet['imageUrl']!),
                 );
               });
         },
