@@ -36,11 +36,60 @@ class _homescreenState extends State<homescreen> {
           return ListView.builder(
               itemCount: tweets.length,
               itemBuilder: (context, index) {
-                var tweet = tweets[index].data() as Map<String, dynamic>;
+                var tweet = tweets[index].data();
+
                 return ListTile(
-                  title: Text(tweet['text']),
-                  subtitle: Text(tweet['imageUrl']!),
-                );
+                    leading: Container(
+                      // padding: const EdgeInsets.all(4),
+                      width: 20,
+                      child: Row(
+                        children: [
+                          const CircleAvatar(
+                            radius: 20,
+                            backgroundImage: NetworkImage(
+                                'https://firebasestorage.googleapis.com/v0/b/flutterfeed-5cd86.appspot.com/o/Profilepic%2Fdilvich.jpeg?alt=media&token=1b4d39f5-d56f-4758-b9d0-04f91912a121&_gl=1*1igpife*_ga*MTQ3NDc1NTA0NS4xNjkzOTc4MDU3*_ga_CW55HF8NVT*MTY5NzYzNDE0MC40Ny4xLjE2OTc2MzY5NTguNTQuMC4w'),
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                    title: Text(
+                      tweet['name'] ?? 'Username',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(tweet['text']),
+                          Image.network(
+                            tweet['imageUrl']!,
+                            // height: 250,
+                            // width: 250,
+                            fit: BoxFit.cover,
+                          ),
+                          Row(
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.comment),
+                                onPressed: () {},
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.repeat),
+                                onPressed: () {},
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.favorite),
+                                onPressed: () {},
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ));
               });
         },
       ),

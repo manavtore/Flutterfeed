@@ -172,14 +172,14 @@ class _CreateTweetScreenState extends State<CreateTweetScreen> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // CircleAvatar(
-                //   radius: 25,
-                //   backgroundImage: userProfileURl != null
-                //       ? NetworkImage(userProfileURl!)
-                //       : const NetworkImage(
-                //           'assets/avatars/default_avatar.png',
-                //         ),
-                // ),
+                CircleAvatar(
+                  radius: 30,
+                  backgroundImage: userProfileURl != null
+                      ? NetworkImage(userProfileURl!)
+                      : NetworkImage(
+                          'https://firebasestorage.googleapis.com/v0/b/flutterfeed-5cd86.appspot.com/o/Profilepic%2Fdilvich.jpeg?alt=media&token=1b4d39f5-d56f-4758-b9d0-04f91912a121&_gl=1*1igpife*_ga*MTQ3NDc1NTA0NS4xNjkzOTc4MDU3*_ga_CW55HF8NVT*MTY5NzYzNDE0MC40Ny4xLjE2OTc2MzY5NTguNTQuMC4w',
+                        ),
+                ),
                 const Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: 16,
@@ -225,7 +225,7 @@ class _CreateTweetScreenState extends State<CreateTweetScreen> {
       'tweetType': 'text',
       'tweetedAt': FieldValue.serverTimestamp(),
       'likes': [],
-      'commentIds': [],
+      'comment': [],
       'reshareCount': 0,
       'retweetedBy': '',
       'repliedTo': '',
