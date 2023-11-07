@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutterfeed/common/pngs/constants.dart';
+import 'package:flutterfeed/common/assets/pngs/constants.dart';
 import 'package:flutterfeed/controller/auth_controller.dart';
 
 class Signinbutton extends ConsumerWidget {

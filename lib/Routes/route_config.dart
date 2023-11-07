@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutterfeed/Tweet/view/create_tweet_view.dart';
+import 'package:flutterfeed/Tweet/services/create_tweet_view.dart';
 import 'package:flutterfeed/view/main/homescreen.dart';
-import 'package:flutterfeed/view/page/create_account.dart';
-import 'package:flutterfeed/view/page/loginPage.dart';
+import 'package:flutterfeed/view/auth/create_account.dart';
+import 'package:flutterfeed/view/auth/loginPage.dart';
 import 'package:flutterfeed/view/page/profileScreen.dart';
-import 'package:flutterfeed/view/page/signInPage.dart';
-import 'package:flutterfeed/view/page/signup.dart';
+import 'package:flutterfeed/view/auth/signInPage.dart';
+import 'package:flutterfeed/view/auth/signup.dart';
 import 'package:go_router/go_router.dart';
 
 class Approuter {

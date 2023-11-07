@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterfeed/theme/pallete.dart';
-import 'package:flutterfeed/view/page/create_account.dart';
+import 'package:flutterfeed/view/auth/create_account.dart';
 
 class create_button extends ConsumerWidget {
   const create_button({super.key});

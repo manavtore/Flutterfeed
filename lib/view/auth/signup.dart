@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutterfeed/common/Button/create_button.dart';
-import 'package:flutterfeed/common/Button/login_button.dart';
-import 'package:flutterfeed/common/Button/or_bar.dart';
-import 'package:flutterfeed/common/Button/sign_in_button.dart';
-import 'package:flutterfeed/common/Reusables/appbar.dart';
+import 'package:flutterfeed/common/assets/Button/Or_bar.dart';
+import 'package:flutterfeed/common/assets/Button/create_button.dart';
+import 'package:flutterfeed/common/assets/Button/login_button.dart';
+import 'package:flutterfeed/common/assets/Button/sign_in_button.dart';
+import 'package:flutterfeed/common/assets/Reusables/appbar.dart';
 import 'package:flutterfeed/common/assets/bottom_bar.dart';
-import 'package:flutterfeed/view/page/create_account.dart';
+import 'package:flutterfeed/view/auth/create_account.dart';
 
 class sign_up extends StatefulWidget {
   const sign_up({super.key});

@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import 'package:flutterfeed/providers/firebase_provider.dart';
+import 'package:flutterfeed/controller/providers/firebase_provider.dart';
 
 final authRepositoryProvider = Provider((ref) => Authrepository(
       firestore: ref.read(firestoreProvider),

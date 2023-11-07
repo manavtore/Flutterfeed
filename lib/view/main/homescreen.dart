@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterfeed/common/Reusables/appbar.dart';
+import 'package:flutterfeed/common/assets/Reusables/appbar.dart';
 import 'package:flutterfeed/theme/pallete.dart';
 import 'package:go_router/go_router.dart';
 
